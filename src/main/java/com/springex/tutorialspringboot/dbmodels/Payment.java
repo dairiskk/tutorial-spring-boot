@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "payment")
 public class Payment {
@@ -29,6 +31,8 @@ public class Payment {
     @Getter
     @Setter
     private String accountTo;
-
+    @Getter
+    @Setter
+    private LocalDateTime created = LocalDateTime.now();
 
 }
