@@ -4,6 +4,7 @@ import com.springex.tutorialspringboot.dbmodels.Payment;
 import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.PaymentRepository;
 import com.springex.tutorialspringboot.rqmodels.PaymentRq;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,8 +22,8 @@ public class PaymentController {
     private PaymentRepository paymentRepository;
 
     @GetMapping
-    public List<Payment> findMyPayments(Authentication authentication) {
-        SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
+    public List<Payment> findMyPayments(@NotNull Authentication authentication) {
+        var securityUser = (SecurityUser)authentication.getPrincipal();
         return (List<Payment>) paymentRepository.findByClientId(securityUser.user.getId());
     }
 
@@ -31,7 +32,7 @@ public class PaymentController {
         return null;
     }
     @PostMapping
-    public Payment savePayment(@Validated @RequestBody PaymentRq payment, Authentication authentication) {
+    public Payment savePayment(@Validated @RequestBody @NotNull PaymentRq payment, @NotNull Authentication authentication) {
         SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
         Payment newpayment = new Payment();
         newpayment.setStatus("CREATED");
