@@ -31,9 +31,13 @@ public class MessageController {
 
 
     @PostMapping
-    public Message save(Message msg, Authentication authentication) {
+    public Message save(@RequestBody Message msg, Authentication authentication) {
         SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
-        return messageRepository.save(new Message(msg.getChatRoomId(), securityUser.user.getId(), msg.getMessageText()));
+        if(!chatRoomRepository.findById(msg.getChatRoomId()).get().getParticipantsId().contains(securityUser.user.getId())){
+            throw new RuntimeException("not allowed");
+        } else {        return messageRepository.save(new Message(msg.getChatRoomId(), securityUser.user.getId(), msg.getMessageText()));
+        }
+
     }
     @GetMapping()
     public List<Message> get(Authentication authentication) {

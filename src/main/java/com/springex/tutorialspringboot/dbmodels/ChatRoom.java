@@ -27,4 +27,7 @@ public class ChatRoom {
         this.participantsId = participantsId;
         this.created = LocalDateTime.now();
     }
+
+    public ChatRoom() {
+    }
 }

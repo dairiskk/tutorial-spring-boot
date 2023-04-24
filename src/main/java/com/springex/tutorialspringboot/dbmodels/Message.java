@@ -1,5 +1,6 @@
 package com.springex.tutorialspringboot.dbmodels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,10 @@ public class Message {
     @Getter
     @Setter
     private LocalDateTime created;
+
+    public Message() {
+
+    }
 
     public Message(long chatRoomId, long userId, String messageText) {
         this.chatRoomId = chatRoomId;
