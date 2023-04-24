@@ -19,9 +19,6 @@ import java.util.UUID;
 @RequestMapping("/api/account")
 @PreAuthorize("hasRole('ROLE_USER')")
 public class AccountController {
-    @Autowired
-    @Lazy
-    private AccountController accountController;
 
     @Autowired
     private UserRepository userRepository;

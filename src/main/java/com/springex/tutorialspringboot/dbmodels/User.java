@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +15,10 @@ public class User {
     @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    private String uuid = UUID.randomUUID().toString();
     @Getter
     @Setter
     private String username;
