@@ -39,11 +39,7 @@ public class MessageController {
         }
 
     }
-    @GetMapping()
-    public List<Message> get(Authentication authentication) {
-        SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
-        return messageRepository.findByUserId(securityUser.user.getId());
-    }
+
     @GetMapping("/{id}")
     public List<Message> get(@PathVariable(value = "id") long chatRoomId, Authentication authentication) throws Exception {
         SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
