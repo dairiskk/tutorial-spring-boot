@@ -30,7 +30,6 @@ public class Room {
     private User user;
 
 
-
     @Getter
     @Setter
     @JsonManagedReference
