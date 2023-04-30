@@ -1,13 +1,16 @@
 package com.springex.tutorialspringboot.dbmodels;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
+
 
 @Entity
 @Table(name = "users")
@@ -31,13 +34,15 @@ public class User {
     @Getter
     @Setter
     @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<Room> chatRooms;
+    private Set<Room> rooms;
 
     @Getter
     @Setter
     @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Message> messages;

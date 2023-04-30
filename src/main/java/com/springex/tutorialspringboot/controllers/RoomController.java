@@ -9,11 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/chatroom")
 @PreAuthorize("hasRole('ROLE_USER')")
-public class ChatRoomController {
+public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
@@ -21,22 +22,23 @@ public class ChatRoomController {
 
     @PostMapping
     public Room save(Authentication authentication) {
-       return null;
+        SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
+        return roomRepository.save(new Room(securityUser.user));
     }
 
-    //    @PutMapping
-//    public ChatRoom update(Authentication authentication) {
-//        SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
-//        securityUser.user.getId();
-//        return chatRoomRepository.save(new ChatRoom(Collections.singletonList(securityUser.user.getId())));
-//    }
     @GetMapping()
-    public List<Room> get(Authentication authentication) {
+    public List<Room> getAll(Authentication authentication) {
         SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
        return roomRepository.findByUser(securityUser.user);
 
     }
+    @GetMapping("/{id}")
+    public Stream<Room> getOne(Authentication authentication, @PathVariable(value = "id") long id) {
+        SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
+        List<Room> clientRooms= roomRepository.findByUser(securityUser.user);
+      return clientRooms.stream().filter(x->x.getId()==id);
 
+    }
     @PostMapping("/join/{id}")
     public Room join(Authentication authentication, @PathVariable(value = "id") long id) {
         return null;

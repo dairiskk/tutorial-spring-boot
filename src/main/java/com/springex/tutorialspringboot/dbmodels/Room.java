@@ -1,6 +1,7 @@
 package com.springex.tutorialspringboot.dbmodels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class Room {
     @Getter
     @Setter
     @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Message> messages;
