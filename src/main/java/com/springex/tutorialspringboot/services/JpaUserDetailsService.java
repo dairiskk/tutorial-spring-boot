@@ -1,6 +1,5 @@
 package com.springex.tutorialspringboot.services;
 
-import com.springex.tutorialspringboot.dbmodels.User;
 import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

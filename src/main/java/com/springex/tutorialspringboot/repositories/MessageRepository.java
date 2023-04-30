@@ -1,6 +1,5 @@
 package com.springex.tutorialspringboot.repositories;
 
-import com.springex.tutorialspringboot.dbmodels.Account;
 import com.springex.tutorialspringboot.dbmodels.Message;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

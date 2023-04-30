@@ -2,7 +2,6 @@ package com.springex.tutorialspringboot.controllers;
 
 import com.springex.tutorialspringboot.dbmodels.User;
 import com.springex.tutorialspringboot.repositories.UserRepository;
-import org.hibernate.NonUniqueObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
