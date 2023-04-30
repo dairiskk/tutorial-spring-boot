@@ -1,23 +1,21 @@
 package com.springex.tutorialspringboot.dbmodels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "message")
-public class Message {
+@Table(name = "rooms")
+public class Room {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Getter
-    @Setter
-    private String messageText;
 
     @Getter
     @Setter
@@ -27,24 +25,23 @@ public class Message {
     @Setter
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "room_id", nullable = true)
-    private Room room;
-
-    @Getter
-    @Setter
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Message() {
 
+
+    @Getter
+    @Setter
+    @JsonManagedReference
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Message> messages;
+
+    public Room(User user) {
+        this.user = user;
+        this.created = LocalDateTime.now();
     }
 
-    public Message(String messageText, Room room, User user) {
-        this.messageText = messageText;
-        this.created = LocalDateTime.now();
-        this.room = room;
-        this.user = user;
+    public Room() {
     }
 }

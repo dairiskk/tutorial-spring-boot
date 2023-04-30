@@ -1,10 +1,12 @@
 package com.springex.tutorialspringboot.dbmodels;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +27,20 @@ public class User {
     @Getter
     @Setter
     private String password;
+
+    @Getter
+    @Setter
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Room> chatRooms;
+
+    @Getter
+    @Setter
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Message> messages;
     @Getter
     @Setter
     private String roles;
@@ -51,6 +67,7 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
+
 
     public User() {
 
