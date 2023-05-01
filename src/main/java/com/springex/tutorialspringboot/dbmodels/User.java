@@ -31,12 +31,11 @@ public class User {
     @Setter
     private String password;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Getter
     @Setter
     @JsonManagedReference
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
     private Set<Room> rooms;
 
     @Getter

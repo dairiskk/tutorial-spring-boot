@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,13 +23,6 @@ public class Room {
     @Setter
     private LocalDateTime created;
 
-    @Getter
-    @Setter
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
 
     @Getter
     @Setter
@@ -38,8 +32,16 @@ public class Room {
             cascade = CascadeType.ALL)
     private Set<Message> messages;
 
+    @ManyToMany
+    @Getter
+    @JsonIgnore
+    private Set<User> user;
+    public void setUser(User user) {
+        this.user.add(user);
+    }
     public Room(User user) {
-        this.user = user;
+        this.user = new HashSet<>();
+        this.user.add(user);
         this.created = LocalDateTime.now();
     }
 
