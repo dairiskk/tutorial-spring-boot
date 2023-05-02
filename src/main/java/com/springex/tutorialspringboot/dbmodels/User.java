@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -31,10 +31,9 @@ public class User {
     @Setter
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "users")
     @Getter
     @Setter
-    @JsonManagedReference
     @JsonIgnore
     private Set<Room> rooms;
 

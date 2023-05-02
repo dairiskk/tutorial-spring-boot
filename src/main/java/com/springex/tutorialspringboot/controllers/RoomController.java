@@ -37,14 +37,14 @@ public class RoomController {
     @GetMapping()
     public List<Room> getAll(Authentication authentication) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        return roomRepository.findByUser(securityUser.user);
+        return roomRepository.findByUsers(securityUser.user);
 
     }
 
     @GetMapping("/{id}")
     public Stream<Room> getOne(Authentication authentication, @PathVariable(value = "id") long id) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        List<Room> clientRooms = roomRepository.findByUser(securityUser.user);
+        List<Room> clientRooms = roomRepository.findByUsers(securityUser.user);
         var rooms = clientRooms.stream().filter(x -> x.getId() == id);
         if (rooms.findAny().isEmpty()) {
             throw new ResponseStatusException(
@@ -58,7 +58,7 @@ public class RoomController {
     @PostMapping("/join/{id}")
     public Room join(Authentication authentication, @PathVariable(value = "id") long id) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        List<Room> clientRooms = roomRepository.findByUser(securityUser.user);
+        List<Room> clientRooms = roomRepository.findByUsers(securityUser.user);
         var rooms = clientRooms.stream().filter(x -> x.getId() == id);
         if(roomRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(
@@ -79,10 +79,18 @@ public class RoomController {
     public Set<Room> quit(Authentication authentication, @PathVariable(value = "id") long id) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 
+        var updatedRoom = roomRepository.findById(id).get().getUsers();
+        updatedRoom.remove(securityUser.user);
+
        var currentUserRooms= securityUser.user.getRooms();
         currentUserRooms.remove(id);
         securityUser.user.setRooms(currentUserRooms);
-        userRepository.save(securityUser.user);
+
+     //   userRepository.updateUserRooms(currentUserRooms, securityUser.user.getId());
+      //  roomRepository.updateRoomUser( updatedRoom, id);
+
+
+
         return userRepository.findByUsername(securityUser.user.getUsername()).get().getRooms();
 
     }

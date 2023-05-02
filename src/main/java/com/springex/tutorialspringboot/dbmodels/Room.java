@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room")
 public class Room {
     @Id
     @Getter
@@ -35,13 +35,18 @@ public class Room {
     @ManyToMany
     @Getter
     @JsonIgnore
-    private Set<User> user;
+    @JoinTable(
+            name = "user_rooms",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users;
     public void setUser(User user) {
-        this.user.add(user);
+        this.users.add(user);
     }
     public Room(User user) {
-        this.user = new HashSet<>();
-        this.user.add(user);
+        this.users = new HashSet<>();
+        this.users.add(user);
         this.created = LocalDateTime.now();
     }
 
