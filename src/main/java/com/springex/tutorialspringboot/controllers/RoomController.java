@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/api/chatroom")
+@RequestMapping("/api/room")
 @PreAuthorize("hasRole('ROLE_USER')")
 public class RoomController {
 

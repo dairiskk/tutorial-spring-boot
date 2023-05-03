@@ -15,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class TutorialSpringBootApplication {
 
-    private Room savedRoom2;
-
     public static void main(String[] args) {
         SpringApplication.run(TutorialSpringBootApplication.class, args);
     }
@@ -30,9 +28,11 @@ public class TutorialSpringBootApplication {
             var savedUser2 = usersR.save(usr2);
             var savedRoom1 = roomR.save(new Room(savedUser1));
             var savedRoom2 = roomR.save(new Room(savedUser2));
+            var savedRoom3 = roomR.save(new Room(savedUser2));
             messageR.save(new Message("hello from user 1 in room 1", savedRoom1, usr1));
             messageR.save(new Message("hello from user 2 in room 1", savedRoom1, usr1));
             messageR.save(new Message("hello from user 1 in room 2", savedRoom2, usr1));
+            messageR.save(new Message("hello from user 2 in room 2", savedRoom2, usr2));
             messageR.save(new Message("hello from user 2 in room 2", savedRoom2, usr2));
         };
     }

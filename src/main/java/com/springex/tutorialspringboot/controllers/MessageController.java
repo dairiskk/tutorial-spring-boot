@@ -1,6 +1,7 @@
 package com.springex.tutorialspringboot.controllers;
 
 import com.springex.tutorialspringboot.dbmodels.Message;
+import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.RoomRepository;
 import com.springex.tutorialspringboot.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class MessageController {
     @GetMapping("/{id}")
     public List<Message> get(@PathVariable(value = "id") long chatRoomId, Authentication authentication) throws Exception {
         return null;
+    }
+
+    @GetMapping("")
+    public List<Message> get(Authentication authentication) throws Exception {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        return messageRepository.findByUser(securityUser.user);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.springex.tutorialspringboot.dbmodels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,14 +27,16 @@ public class Message {
 
     @Getter
     @Setter
-    @JsonBackReference
+    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = true)
     private Room room;
 
     @Getter
     @Setter
-    @JsonBackReference
+    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
