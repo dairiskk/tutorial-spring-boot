@@ -1,7 +1,9 @@
 package com.springex.tutorialspringboot.repositories;
 
+import com.springex.tutorialspringboot.dbmodels.Message;
 import com.springex.tutorialspringboot.dbmodels.Room;
 import com.springex.tutorialspringboot.dbmodels.User;
+import org.hibernate.mapping.Any;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,12 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
 //    @Transactional

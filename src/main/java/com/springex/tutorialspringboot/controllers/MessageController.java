@@ -1,13 +1,21 @@
 package com.springex.tutorialspringboot.controllers;
 
+import com.springex.tutorialspringboot.HttpErrorConst;
 import com.springex.tutorialspringboot.dbmodels.Message;
+import com.springex.tutorialspringboot.dbmodels.Room;
+import com.springex.tutorialspringboot.dbmodels.User;
 import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.RoomRepository;
 import com.springex.tutorialspringboot.repositories.MessageRepository;
+import com.springex.tutorialspringboot.repositories.UserRepository;
+import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,19 +27,23 @@ public class MessageController {
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
-    private RoomRepository chatRoomRepository;
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
-    @PostMapping
-    public Message save(@RequestBody Message msg, Authentication authentication) {
-        return null;
-
-    }
-
-    @GetMapping("/{id}")
-    public List<Message> get(@PathVariable(value = "id") long chatRoomId, Authentication authentication) throws Exception {
+    @GetMapping("/{roomId}")
+    public List<Message> get(@PathVariable(value = "id") long roomId, Authentication authentication) throws Exception {
         return null;
     }
+    @PostMapping("/{id}")
+    public Message post(@PathVariable(value = "id") long id, @RequestBody Message message, Authentication authentication) throws Exception {
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+       Room messageRoom = securityUser.user.getRooms().stream().filter(x->x.getId()==id).findFirst().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, HttpErrorConst.VALUE_NOT_FOUND));
+        return messageRepository.save(new Message(message.getMessageText(), messageRoom, securityUser.user));
+    }
+
 
     @GetMapping("")
     public List<Message> get(Authentication authentication) throws Exception {
