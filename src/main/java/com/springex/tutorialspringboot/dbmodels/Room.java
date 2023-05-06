@@ -55,6 +55,6 @@ public class Room {
     }
     @PostLoad
     private void postLoad() {
-        this.setParticipants(this.getUsers().toString());
+        this.setParticipants(this.getUsers().stream().map(User::getUsername).toList().toString());
     }
 }
