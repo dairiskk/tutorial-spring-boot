@@ -1,14 +1,12 @@
 package com.springex.tutorialspringboot.controllers;
 
-import com.springex.tutorialspringboot.HttpErrorConst;
+import com.springex.tutorialspringboot.HttpResponseMessages;
 import com.springex.tutorialspringboot.dbmodels.Room;
-import com.springex.tutorialspringboot.dbmodels.User;
 import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.RoomRepository;
 import com.springex.tutorialspringboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +46,7 @@ public class RoomController {
         var rooms = clientRooms.stream().filter(x -> x.getId() == id);
         if (rooms.findAny().isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, HttpErrorConst.VALUE_NOT_FOUND);
+                    HttpStatus.NOT_FOUND, HttpResponseMessages.VALUE_NOT_FOUND);
         } else {
             return clientRooms.stream().filter(x -> x.getId() == id);
         }
@@ -62,7 +60,7 @@ public class RoomController {
         var rooms = clientRooms.stream().filter(x -> x.getId() == id);
         if(roomRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, HttpErrorConst.ROOM_DOES_NOT_EXIST);
+                    HttpStatus.NOT_FOUND, HttpResponseMessages.ROOM_DOES_NOT_EXIST);
         }else {
             if (rooms.findAny().isEmpty()) {
                 var roomToJoin = roomRepository.findById(id);
@@ -70,7 +68,7 @@ public class RoomController {
                return roomRepository.save(roomToJoin.get());
             } else {
                 throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, HttpErrorConst.ALREADY_MEMBER);
+                        HttpStatus.NOT_FOUND, HttpResponseMessages.ALREADY_MEMBER);
             }
         }
     }
