@@ -20,6 +20,9 @@ public class Room {
 
     @Getter
     @Setter
+    private String participants;
+    @Getter
+    @Setter
     private LocalDateTime created;
 
     @Getter
@@ -32,6 +35,7 @@ public class Room {
 
     @ManyToMany
     @Getter
+    @JsonIgnore
     @JoinTable(
             name = "user_rooms",
             joinColumns = @JoinColumn(name = "room_id"),
@@ -48,5 +52,9 @@ public class Room {
     }
 
     public Room() {
+    }
+    @PostLoad
+    private void postLoad() {
+        this.setParticipants(this.getUsers().toString());
     }
 }

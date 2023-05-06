@@ -3,6 +3,7 @@ package com.springex.tutorialspringboot.dbmodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class User {
     private String username;
     @Getter
     @Setter
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //hides password from json
     private String password;
 
     @ManyToMany(mappedBy = "users")
