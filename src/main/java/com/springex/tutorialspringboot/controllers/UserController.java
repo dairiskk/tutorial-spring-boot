@@ -34,7 +34,6 @@ public class UserController {
     public User saveUser(@RequestBody @Validated User user) throws Exception {
         if(userRepository.findByUsername(user.getUsername()).isEmpty()){
             return userRepository.save(new User(user.getUsername(), encoder.encode(user.getPassword()), user.getRoles()));
-
         }
         else {
             throw new Exception("user name not unique");

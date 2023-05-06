@@ -3,7 +3,6 @@ package com.springex.tutorialspringboot.dbmodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +22,7 @@ public class User {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
+    @JsonIgnore
     private String uuid = UUID.randomUUID().toString();
     @Getter
     @Setter
@@ -46,23 +46,29 @@ public class User {
     private Set<Message> messages;
     @Getter
     @Setter
+    @JsonIgnore
     private String roles;
 
     @Getter
     @Setter
-    private boolean accountNonExpired = true;;
+    @JsonIgnore
+    private boolean accountNonExpired = true;
     @Getter
     @Setter
-    private boolean accountNonLocked = true;;
+    @JsonIgnore
+    private boolean accountNonLocked = true;
     @Getter
     @Setter
-    private boolean credentialsNonExpired = true;;
+    @JsonIgnore
+    private boolean credentialsNonExpired = true;
     @Getter
     @Setter
+    @JsonIgnore
     private boolean enabled = true;
 
     @Getter
     @Setter
+    @JsonIgnore
     private LocalDateTime created = LocalDateTime.now();
 
     public User(String username, String password, String roles) {
@@ -76,4 +82,8 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return this.getUsername();
+    }
 }

@@ -1,6 +1,5 @@
 package com.springex.tutorialspringboot.dbmodels;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -23,7 +22,6 @@ public class Room {
     @Setter
     private LocalDateTime created;
 
-
     @Getter
     @Setter
     @JsonManagedReference
@@ -34,7 +32,6 @@ public class Room {
 
     @ManyToMany
     @Getter
-    @JsonIgnore
     @JoinTable(
             name = "user_rooms",
             joinColumns = @JoinColumn(name = "room_id"),
