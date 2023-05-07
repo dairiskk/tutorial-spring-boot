@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.0.5'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id "io.freefair.lombok" version "6.6.1"
+	id 'com.adarshr.test-logger' version '3.2.0'
 }
 
 group = 'com.springex'
@@ -32,6 +33,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
+
+//.\gradlew test --rerun-tasks
 tasks.named('test') {
+	testlogger {
+		theme 'standard-parallel' // task level
+	}
 	useJUnitPlatform()
 }

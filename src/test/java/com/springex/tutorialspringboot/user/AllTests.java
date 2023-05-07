@@ -13,7 +13,6 @@ import java.util.List;
 
 @Slf4j
 class AllTests extends BaseTest {
-
 	@Test
 	void userTest() {
 		Response response = httpRequest.get("/api/user");
