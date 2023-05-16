@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<User> findUserById(@PathVariable(value = "id") long id) {
+    public Optional<User> findUserById(@PathVariable(value = "id") UUID id) {
         return userRepository.findById(id);
     }
     @PostMapping

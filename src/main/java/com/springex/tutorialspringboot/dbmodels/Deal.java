@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deal")
@@ -18,9 +19,8 @@ public class Deal {
 
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     @Getter
     @Setter
     @ManyToOne
