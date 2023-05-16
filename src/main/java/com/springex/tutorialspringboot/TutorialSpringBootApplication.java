@@ -1,10 +1,12 @@
 package com.springex.tutorialspringboot;
 
-import com.springex.tutorialspringboot.dbmodels.Room;
-import com.springex.tutorialspringboot.dbmodels.Message;
+import com.springex.tutorialspringboot.dbmodels.Deal;
+import com.springex.tutorialspringboot.dbmodels.Pet;
+import com.springex.tutorialspringboot.dbmodels.Photo;
 import com.springex.tutorialspringboot.dbmodels.User;
-import com.springex.tutorialspringboot.repositories.RoomRepository;
-import com.springex.tutorialspringboot.repositories.MessageRepository;
+import com.springex.tutorialspringboot.repositories.DealRepository;
+import com.springex.tutorialspringboot.repositories.PetRepository;
+import com.springex.tutorialspringboot.repositories.PhotoRepository;
 import com.springex.tutorialspringboot.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,20 +24,25 @@ public class TutorialSpringBootApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository usersR, RoomRepository roomR, MessageRepository messageR, PasswordEncoder encoder) {
+    CommandLineRunner commandLineRunner(UserRepository usersR, DealRepository dealRepository, PasswordEncoder encoder, PhotoRepository photoRepository, PetRepository petR) {
         User usr1 = new User("User", encoder.encode("password"), "ROLE_USER");
         User usr2 = new User("Admin", encoder.encode("password"), "ROLE_ADMIN,ROLE_USER");
+        Pet pet1 = new Pet("name of pet", usr1);
+        Pet pet2 = new Pet("name of pet", usr2);
+        Photo photo1 = new Photo(usr1);
+        Photo photo2 = new Photo(pet1);
+        Deal deal1 = new Deal(usr1);
+        Deal deal2 = new Deal(usr2);
         return args -> {
-            var savedUser1 = usersR.save(usr1);
-            var savedUser2 = usersR.save(usr2);
-            var savedRoom1 = roomR.save(new Room(savedUser1));
-            var savedRoom2 = roomR.save(new Room(savedUser2));
-            var savedRoom3 = roomR.save(new Room(savedUser2));
-            messageR.save(new Message("hello from user 1 in room 1", savedRoom1, usr1));
-            messageR.save(new Message("hello from user 2 in room 1", savedRoom1, usr1));
-            messageR.save(new Message("hello from user 1 in room 2", savedRoom2, usr1));
-            messageR.save(new Message("hello from user 2 in room 2", savedRoom2, usr2));
-            messageR.save(new Message("hello from user 2 in room 2", savedRoom2, usr2));
+            usersR.save(usr1);
+            usersR.save(usr2);
+            petR.save(pet1);
+            petR.save(pet2);
+            photoRepository.save(photo1);
+            photoRepository.save(photo2);
+            dealRepository.save(deal1);
+            dealRepository.save(deal2);
+
         };
     }
 

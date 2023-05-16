@@ -1,8 +1,8 @@
 package com.springex.tutorialspringboot;
 
-import com.springex.tutorialspringboot.BaseTest;
-import com.springex.tutorialspringboot.dbmodels.Message;
-import com.springex.tutorialspringboot.dbmodels.Room;
+import com.springex.tutorialspringboot.dbmodels.Deal;
+import com.springex.tutorialspringboot.dbmodels.Pet;
+import com.springex.tutorialspringboot.dbmodels.Photo;
 import com.springex.tutorialspringboot.dbmodels.User;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +20,21 @@ class AllTests extends BaseTest {
 		Assertions.assertEquals(2, users.size());
 	}
 	@Test
-	void roomTest() {
-		Response response = httpRequest.get("/api/room");
-		List<Room> room = List.of(response.body().as(Room[].class));
+	void dealTest() {
+		Response response = httpRequest.get("/api/deal");
+		List<Deal> room = List.of(response.body().as(Deal[].class));
 		Assertions.assertEquals(2, room.size());
 	}
 	@Test
-	void messageTest() {
-		Response response = httpRequest.get("/api/message");
-		List<Message> messages = List.of(response.body().as(Message[].class));
+	void petTest() {
+		Response response = httpRequest.get("/api/pet");
+		List<Pet> messages = List.of(response.body().as(Pet[].class));
+		Assertions.assertEquals(2, messages.size());
+	}
+	@Test
+	void photoTest() {
+		Response response = httpRequest.get("/api/photo");
+		List<Photo> messages = List.of(response.body().as(Photo[].class));
 		Assertions.assertEquals(2, messages.size());
 	}
 }

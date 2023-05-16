@@ -2,14 +2,13 @@ package com.springex.tutorialspringboot.dbmodels;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Entity
@@ -21,10 +20,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
-    @JsonIgnore
-    private String uuid = UUID.randomUUID().toString();
     @Getter
     @Setter
     private String username;
@@ -33,24 +28,16 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //hides password from json
     private String password;
 
-    @ManyToMany(mappedBy = "users")
     @Getter
     @Setter
-    @JsonIgnore
-    private Set<Room> rooms;
+    private String name;
 
     @Getter
     @Setter
-    @JsonManagedReference
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Message> messages;
-    @Getter
-    @Setter
-    @JsonIgnore
     private String roles;
-
+    @Getter
+    @Setter
+    private String phone;
     @Getter
     @Setter
     @JsonIgnore
