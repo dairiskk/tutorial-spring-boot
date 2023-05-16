@@ -1,8 +1,8 @@
 package com.springex.tutorialspringboot.services;
 
-import com.springex.tutorialspringboot.dbmodels.User;
 import com.springex.tutorialspringboot.othermodels.SecurityUser;
 import com.springex.tutorialspringboot.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
+    @Autowired
     private final UserRepository userRepository;
 
     public JpaUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

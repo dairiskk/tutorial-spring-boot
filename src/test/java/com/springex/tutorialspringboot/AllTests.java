@@ -1,4 +1,4 @@
-package com.springex.tutorialspringboot.user;
+package com.springex.tutorialspringboot;
 
 import com.springex.tutorialspringboot.BaseTest;
 import com.springex.tutorialspringboot.dbmodels.Message;
